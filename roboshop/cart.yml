@@ -4,7 +4,7 @@ metadata:
   name: cart
   annotations:
     eks.amazonaws.com/role-arn: arn:aws:iam::699776063346:role/aws-ssm-EKS
-    
+
 ---
 apiVersion: v1
 kind: Pod
@@ -17,7 +17,7 @@ spec:
   containers:
     - name: cart
       image: 699776063346.dkr.ecr.us-east-1.amazonaws.com/cart:2.0.0
-  initContainer:
+  initContainers:
     - name: aws-ssm-param-store
       image: 699776063346.dkr.ecr.us-east-1.amazonaws.com/aws-ssm-param-store:2.0.0
       args: ["sample:dev.docdb.pass"]
