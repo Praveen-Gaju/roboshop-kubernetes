@@ -23,7 +23,7 @@ spec:
   initContainers:
     - name: aws-ssm-param-store
       image: 699776063346.dkr.ecr.us-east-1.amazonaws.com/aws-ssm-param-store:2.0.0
-      args: ["sample:dev.docdb.pass"]
+      args: ["sample:prod.docdb.pass"]
       volumeMounts:
         - mountPath: /params
           name: params
