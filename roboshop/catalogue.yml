@@ -1,13 +1,37 @@
 apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: catalogue
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::699776063346:role/aws-ssm-eks
+
+---
+apiVersion: v1
 kind: Pod
 metadata:
   name: catalogue
   labels:
     component: catalogue
 spec:
+  serviceAccountName: catalogue
   containers:
     - name: catalogue
-      image: 699776063346.dkr.ecr.us-east-1.amazonaws.com/catalogue:2.0.0
+      image: 699776063346.dkr.ecr.us-east-1.amazonaws.com/catalogue:2.0.1
+      volumeMounts:
+        - mountPath: /params
+          name: params
+  initContainers:
+    - name: aws-ssm-param-store
+      image: 699776063346.dkr.ecr.us-east-1.amazonaws.com/aws-ssm-param-store:2.0.1
+      args: ["DOCUMENTDB:prod.catalogue.mongo"]
+      volumeMounts:
+        - mountPath: /params
+          name: params
+  volumes:
+    - name: params
+      emptyDir:
+        sizeLimit: 100Mi
+
 
 ---
 
