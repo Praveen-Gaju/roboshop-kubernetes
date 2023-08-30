@@ -27,7 +27,6 @@ spec:
       volumeMounts:
         - mountPath: /params
           name: params
-
   volumes:
     - name: params
       emptyDir:
